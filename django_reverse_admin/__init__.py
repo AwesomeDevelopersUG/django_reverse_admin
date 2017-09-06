@@ -68,6 +68,7 @@ def reverse_inlineformset_factory(parent_model,
     FormSet.parent_fk_name = parent_fk_name
     return FormSet
 
+
 class ReverseInlineModelAdmin(InlineModelAdmin):
     '''
     Use the name and the help_text of the owning models field to
@@ -103,7 +104,10 @@ class ReverseInlineModelAdmin(InlineModelAdmin):
         exclude = list(kwargs.get("exclude", []))
         exclude_2 = self.exclude or []
         # but need exclude to be None if result is an empty list
-        exclude = exclude.extend(list(exclude_2)) or None
+        exclude.extend(list(exclude_2))
+
+        if not exclude:
+            exclude = None
 
         defaults = {
             "form": self.form,
